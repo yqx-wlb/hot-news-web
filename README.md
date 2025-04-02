@@ -48,16 +48,6 @@ npm run dev
 npm run build
 ```
 
-## 📦 部署
-
-项目使用 GitHub Pages 部署，每次推送到 main 分支会自动触发部署流程。
-
-## 🌟 数据来源
-
-- 各大平台热榜数据来自 [韩小韩 API](https://api.vvhan.com)
-- 一言句子来自 [一言 API](https://api.vvhan.com/api/ian)
-- 音乐数据来自 [网易云音乐 API](https://api.vvhan.com/api/wyMusic)
-
 ## 📝 开源协议
 
 [MIT License](LICENSE)
