@@ -5,14 +5,14 @@ export function YiYan() {
 
   if (loading) {
     return (
-      <div className="text-center text-sm text-muted-foreground animate-pulse">
+      <div className="text-sm text-muted-foreground animate-pulse">
         正在加载一言...
       </div>
     );
   }
 
   if (error) {
-    return <div className="text-center text-sm text-destructive">{error}</div>;
+    return <div className="text-sm text-destructive">{error}</div>;
   }
 
   if (!yiyan) {
@@ -20,11 +20,6 @@ export function YiYan() {
   }
 
   return (
-    <div className="text-center space-y-1">
-      <p className="text-sm text-foreground">『{yiyan.content}』</p>
-      <p className="text-xs text-muted-foreground">
-        —— {yiyan.form} · {yiyan.creator}
-      </p>
-    </div>
+    <div className="text-sm text-muted-foreground">『{yiyan.content}』</div>
   );
 }
