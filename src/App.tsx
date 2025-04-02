@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { NewsSection } from "./components/NewsSection";
 import { MusicPlayer } from "./components/MusicPlayer";
 import type { NewsSection as NewsSectionType } from "./types/news";
+import { YiYan } from "./components/YiYan";
 
 interface YiyanResponse {
   success: boolean;
@@ -182,6 +183,7 @@ function App() {
               </button>
             </div>
           </div>
+          <YiYan />
         </div>
       </header>
       <main className="flex-1 container max-w-[1440px] mx-auto px-2 sm:px-4 py-4 sm:py-8">
