@@ -185,11 +185,11 @@ function App() {
         </div>
       </header>
       <main className="flex-1 container max-w-[1440px] mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {sections.map((section, index) => (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {sections.map((section) => (
             <div
-              key={index}
-              className="h-[calc(100vh-12rem)] bg-background/50 backdrop-blur-sm rounded-lg overflow-hidden"
+              key={section.id}
+              className="bg-white/30 backdrop-blur-xl rounded-xl p-4 lg:h-[calc(100vh-8rem)] h-auto"
             >
               <NewsSection section={section} />
             </div>

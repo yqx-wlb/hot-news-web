@@ -12,26 +12,23 @@ export const NewsSection: React.FC<NewsSectionProps> = ({ section }) => {
   }
 
   return (
-    <div className="h-full flex flex-col">
-      <div className="flex items-center justify-between p-4 border-b">
-        <div className="flex items-center gap-2">
-          <h2 className="text-lg font-medium">{section.name}</h2>
+    <div className="flex flex-col h-full">
+      <div className="flex items-center justify-between mb-4">
+        <div>
+          <h2 className="text-lg font-bold">{section.name}</h2>
           {section.subtitle && (
-            <span className="text-sm text-muted-foreground">
-              {section.subtitle}
-            </span>
+            <p className="text-sm text-gray-500">{section.subtitle}</p>
           )}
         </div>
         {section.update_time && (
-          <span className="text-xs text-muted-foreground">
-            {section.update_time}
-          </span>
+          <span className="text-xs text-gray-400">{section.update_time}</span>
         )}
       </div>
-      <div className="flex-1 overflow-y-auto px-3 py-2">
-        <div className="space-y-2">
-          {section.data.map((news, index) => (
-            <NewsCard key={index} news={{ ...news, index: index + 1 }} />
+
+      <div className="flex-1 lg:overflow-y-auto overflow-visible">
+        <div className="space-y-4">
+          {section.data.map((item: NewsItem, index: number) => (
+            <NewsCard key={index} item={item} />
           ))}
         </div>
       </div>
