@@ -189,7 +189,7 @@ function App() {
           {sections.map((section, index) => (
             <div
               key={index}
-              className="bg-white/30 backdrop-blur-xl rounded-xl p-3 sm:p-4 lg:h-[calc(100vh-8rem)]"
+              className="bg-card/30 backdrop-blur-xl rounded-xl p-3 sm:p-4 lg:h-[calc(100vh-8rem)] border"
             >
               <NewsSection section={section} />
             </div>
