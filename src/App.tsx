@@ -184,12 +184,12 @@ function App() {
           </div>
         </div>
       </header>
-      <main className="flex-1 container max-w-[1440px] mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {sections.map((section) => (
+      <main className="flex-1 container max-w-[1440px] mx-auto px-2 sm:px-4 py-4 sm:py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-6">
+          {sections.map((section, index) => (
             <div
-              key={section.id}
-              className="bg-white/30 backdrop-blur-xl rounded-xl p-4 lg:h-[calc(100vh-8rem)] h-auto"
+              key={index}
+              className="bg-white/30 backdrop-blur-xl rounded-xl p-3 sm:p-4 lg:h-[calc(100vh-8rem)]"
             >
               <NewsSection section={section} />
             </div>
