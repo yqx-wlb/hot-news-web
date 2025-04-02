@@ -4,14 +4,6 @@ import { MusicPlayer } from "./components/MusicPlayer";
 import type { NewsSection as NewsSectionType } from "./types/news";
 import { YiYan } from "./components/YiYan";
 
-interface YiyanResponse {
-  success: boolean;
-  data: {
-    content: string;
-    from?: string;
-  };
-}
-
 function App() {
   const [sections, setSections] = useState<NewsSectionType[]>([]);
   const [theme, setTheme] = useState<"light" | "dark">(() => {
@@ -20,35 +12,11 @@ function App() {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [yiyan, setYiyan] = useState<{ content: string; from?: string } | null>(
-    null
-  );
   const [showMusicPlayer, setShowMusicPlayer] = useState(false);
 
   useEffect(() => {
     document.documentElement.classList.toggle("light", theme === "light");
   }, [theme]);
-
-  useEffect(() => {
-    const fetchYiyan = async () => {
-      try {
-        const response = await fetch(
-          "https://api.vvhan.com/api/ian/rand?type=json"
-        );
-        const data: YiyanResponse = await response.json();
-        if (data.success) {
-          setYiyan(data.data);
-        }
-      } catch (error) {
-        console.error("Error fetching yiyan:", error);
-      }
-    };
-
-    fetchYiyan();
-    // 每小时更新一次
-    const interval = setInterval(fetchYiyan, 60 * 60 * 1000);
-    return () => clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -146,44 +114,28 @@ function App() {
               )}
             </button>
           </div>
-          <div className="flex items-center justify-between py-1 text-sm">
-            <div className="flex items-center gap-2 text-xs">
-              {yiyan && (
-                <>
-                  <span className="text-primary/70">『</span>
-                  <span className="text-muted-foreground">{yiyan.content}</span>
-                  <span className="text-primary/70">』</span>
-                  {yiyan.from && (
-                    <span className="text-muted-foreground/50">
-                      —— {yiyan.from}
-                    </span>
-                  )}
-                </>
-              )}
-            </div>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setShowMusicPlayer(true)}
-                className="p-2 hover:bg-accent rounded-md transition-colors text-muted-foreground hover:text-foreground"
-                title="打开音乐播放器"
+          <div className="flex items-center justify-between py-1">
+            <YiYan />
+            <button
+              onClick={() => setShowMusicPlayer(true)}
+              className="p-2 hover:bg-accent rounded-md transition-colors text-muted-foreground hover:text-foreground"
+              title="打开音乐播放器"
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
               >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
-                  />
-                </svg>
-              </button>
-            </div>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
+                />
+              </svg>
+            </button>
           </div>
-          <YiYan />
         </div>
       </header>
       <main className="flex-1 container max-w-[1440px] mx-auto px-2 sm:px-4 py-4 sm:py-8">
