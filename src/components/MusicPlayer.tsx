@@ -39,6 +39,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ onClose }) => {
   }, [audio]);
 
   const handleEnded = useCallback(async () => {
+    // 直接切换下一首，不考虑页面可见性
     await handleNext();
   }, []);
 
@@ -58,7 +59,12 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ onClose }) => {
       setPendingSong(null);
       setIsLoading(false);
       if (isPlaying) {
-        audio.play();
+        try {
+          await audio.play();
+        } catch (error) {
+          console.error("播放失败:", error);
+          await fetchMusic(true);
+        }
       }
     }
   }, [pendingSong, isPlaying]);
@@ -110,6 +116,10 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ onClose }) => {
     audio.addEventListener("ended", handleEnded);
     audio.addEventListener("loadedmetadata", handleLoadedMetadata);
 
+    // 设置音频可以在后台播放
+    audio.setAttribute("preload", "auto");
+    audio.setAttribute("autoplay", "true");
+
     return () => {
       audio.removeEventListener("timeupdate", handleTimeUpdate);
       audio.removeEventListener("ended", handleEnded);
@@ -145,9 +155,17 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ onClose }) => {
   };
 
   const handleNext = async () => {
-    setIsPlaying(false);
-    setCurrentTime(0);
-    await fetchMusic(true);
+    try {
+      setIsPlaying(false);
+      setCurrentTime(0);
+      await fetchMusic(true);
+    } catch (error) {
+      console.error("切换下一首失败:", error);
+      // 如果切换失败，等待一段时间后重试
+      setTimeout(async () => {
+        await fetchMusic(true);
+      }, 3000);
+    }
   };
 
   const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
